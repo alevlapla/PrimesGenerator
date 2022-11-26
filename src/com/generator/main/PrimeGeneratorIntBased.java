@@ -14,8 +14,7 @@ public class PrimeGeneratorIntBased implements Runnable {
 	// Бесконечный генератор не реализовать - в любом случае будет ограничение
 	// памяти компьютера. При объёме массива в Integer.MAX_VALUE будет
 	// OutOfMemoryError (requested array size exceeds VM limit)
-//	int generatorCapacity = 100_000_000;
-	int generatorCapacity = 10;
+	int generatorCapacity = 100_000_000;
 
 	// Массив с найденными простыми числами. Все найденные простые числа
 	// перебираются одно за другим вне зависимости от того, сколько простых чисел
@@ -32,9 +31,6 @@ public class PrimeGeneratorIntBased implements Runnable {
 	// массива будут "стартовым" значением для вычёркивания с соответствующим шагом
 	// данного простого числа
 	int lpr[] = new int[generatorCapacity];
-	
-	///!!!
-	int lpr_original[] = new int[generatorCapacity];
 
 	// Буфер данного диапазона: начинается на верхней границе предыдущего диапазона
 	// (включая), а заканчивается на нижней границе следующего диапазона (исключая)
@@ -49,9 +45,6 @@ public class PrimeGeneratorIntBased implements Runnable {
 		end = 1; // Стартовое значение начальной границы первого диапазона
 		pr[0] = 2; // Первое простое число известно по условиям задачи
 		lpr[0] = 2; // Максимальное составное число, полученное из данного простого числа
-		
-		///!!!
-		lpr_original[0] = 2;
 
 		// Бесконечный генератор
 		for (;;) {
@@ -86,8 +79,6 @@ public class PrimeGeneratorIntBased implements Runnable {
 					// составное число в lpr[] для данного простого числа оказывается сильно меньше
 					// начала диапазона start, то есть суммы lpr[i] + pr[i] не хватает
 					int corrected = m - start;
-					System.out.println("pr[j]=" + pr[j] + " lrp_original[]=" + Arrays.toString(lpr_original) + " lpr_current=" + lpr_current + " m=" + m + " corrected="
-							+ corrected + " buff_len=" + buff_len + " start=" + start + " end=" + end);
 					while (corrected < 0) {
 						corrected = corrected + pr[j];
 					}
@@ -96,11 +87,6 @@ public class PrimeGeneratorIntBased implements Runnable {
 					// ловить дальше нечего
 					if (corrected > buff_len) {
 						break;
-					}
-
-					if (buff[corrected] == false) {
-						System.out.println("ПОВТОРНАЯ ПРОВЕРКА pr[j]=" + pr[j] + " m=" + m + " corrected=" + corrected
-								+ " buff_len=" + buff_len + " start=" + start + " end=" + end);
 					}
 
 					// Число присутствует с шагом ранее найденного простого числа - значит оно
@@ -113,11 +99,6 @@ public class PrimeGeneratorIntBased implements Runnable {
 						if (m > lpr[j]) {
 							lpr[j] = m;
 						}
-					}
-					
-					///!!!
-					if (lpr_original[j] == 0) {
-						lpr_original[j] = m;
 					}
 				}
 			}
