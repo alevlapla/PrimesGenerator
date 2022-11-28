@@ -50,6 +50,7 @@ public class PrimeGeneratorIntBased implements Runnable {
 		for (;;) {
 			// Определяем границы данного диапазона и его длину
 			start = end + 1;
+			// TODO Тут может быть переполнение (подумать?).
 			end = pr[pr_current] * pr[pr_current] - 1;
 			int buff_len = end - start + 1;
 
