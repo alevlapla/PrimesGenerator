@@ -9,6 +9,7 @@ public class Starter {
 	public static void main(String[] args) throws InterruptedException {
 //		Thread pg_int = new Thread(new PrimeGeneratorIntBased(), "generator");
 		Thread pg_int = new Thread(new PrimeGeneratorArrayBased(), "generator");
+
 		pg_int.start();
 
 		try {
