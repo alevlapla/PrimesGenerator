@@ -27,9 +27,9 @@ public class PrimeGeneratorArrayBased implements Runnable {
 	// Максимальное количество чисел для проверки (квази-бесконечный массив)
 	// Integer.MAX_VALUE = 2_147_483_647, при -1 происходит ошибка "Requested
 	//  array size exceeds VM limit"
-	private int size = 200_000_000;
+	private int size = 50_000_000;
 	// Максимальное количество простых множителей каждого числа-кандидата проверки
-	private int max_primes = 4;
+	private int max_primes = 7;
 	// Счётчик найденных целых чисел
 	private int count = 0;
 	// Текущее проверяемое простое число
@@ -41,14 +41,15 @@ public class PrimeGeneratorArrayBased implements Runnable {
 	private int[][] cand = new int[size][max_primes];
 
 	@Override
-	public void run() {
+	public void run() {		
 		for (;;) {
 			// У текущего числа-кандидата ранее не было найдено простых множителей
 			if (cand[curr][0] == 0) {
 				cand[curr][0] = curr;
 				// Чтобы не переполнять int, "пробрасывать" будем только в случае отсутствия
 				// переполнения curr * curr
-				if (curr < 46341) {
+				long next_index = (long) curr * curr;
+				if(next_index < size) {
 					cand[curr * curr][0] = curr;
 				}
 				count++;
@@ -60,17 +61,28 @@ public class PrimeGeneratorArrayBased implements Runnable {
 				// Перебор уже записанных простых множителей текущего кандидата
 				for (int i = 0; i < cand[curr].length; i++) {
 					// Индекс целевого кандидата, куда "пробрасывается" данный простой множитель
-					int next_index = curr + cand[curr][i] * 2;
+					long next_index = curr + cand[curr][i] * 2L;
+					
+					// Индекс вышел за пределы массива - переходим на следующую итерацию
+					if (next_index >= size) {
+						continue;
+					}
+					
 					// Поиск последнего элемента в целевом кандидате, чтобы записать в конец
 					int sub = 0;
-					while (cand[next_index][sub] != 0) {
+					while (cand[(int) next_index][sub] != 0) {
 						sub++;
 					}
 					// "Пробрасываем" данный простой делитель
-					cand[next_index][sub] = cand[curr][i];
+					cand[(int) next_index][sub] = cand[curr][i];
 				}
 			}
 			curr = curr + 2; // Переход к следующему нечётному кандидату на простое число
+			
+			// Выход за пределы массива - дальше проверять нечего
+			if (curr >= size) {
+				return;
+			}
 		}
 	}
 }

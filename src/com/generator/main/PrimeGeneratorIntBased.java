@@ -14,7 +14,7 @@ public class PrimeGeneratorIntBased implements Runnable {
 	// Бесконечный генератор не реализовать - в любом случае будет ограничение
 	// памяти компьютера. При объёме массива в Integer.MAX_VALUE будет
 	// OutOfMemoryError (requested array size exceeds VM limit)
-	int generatorCapacity = 100_000_000;
+	int generatorCapacity = 50_000_000;
 
 	// Массив с найденными простыми числами. Все найденные простые числа
 	// перебираются одно за другим вне зависимости от того, сколько простых чисел
@@ -36,9 +36,10 @@ public class PrimeGeneratorIntBased implements Runnable {
 	// (включая), а заканчивается на нижней границе следующего диапазона (исключая)
 	boolean buff[];
 
-	// Границы буфера данного диапазона
-	int start;
-	int end;
+	// Границы буфера данного диапазона. Тип long для не такого быстрого
+	// переполнения переменной
+	long start;
+	long end;
 
 	@Override
 	public void run() {
@@ -50,14 +51,21 @@ public class PrimeGeneratorIntBased implements Runnable {
 		for (;;) {
 			// Определяем границы данного диапазона и его длину
 			start = end + 1;
-			// TODO Тут может быть переполнение (подумать?).
-			end = pr[pr_current] * pr[pr_current] - 1;
-			int buff_len = end - start + 1;
+			end = pr[pr_current] * pr[pr_current] - 1L;
+
+			// Если buff_len > Integer.MAX_VALUE, то создать массив технически не удастся.
+			// После этого диапазоны следует просматривать только c равной длиной
+			// Integer.MAX_VALUE (здесь не реализуется)
+			long buff_len = end - start + 1;
+			if (buff_len > Integer.MAX_VALUE) {
+				System.out.println("buff_len quasi-overflowed");
+				return;
+			}
 
 			// Массив хранения результатов обработки данного диапазона, заполненный true.
 			// Если после вычёркивания чисел из данного массива - элемент остаётся равный
 			// true, то скорректированный индекс данного элемента является простым числом
-			buff = new boolean[buff_len];
+			buff = new boolean[(int) buff_len];
 			Arrays.fill(buff, true);
 
 			// Вычёркивание из текущего диапазона составных множителей ранее найденных
@@ -79,7 +87,7 @@ public class PrimeGeneratorIntBased implements Runnable {
 					// Корректировка необходима для обработки случаев, когда последнее
 					// составное число в lpr[] для данного простого числа оказывается сильно меньше
 					// начала диапазона start, то есть суммы lpr[i] + pr[i] не хватает
-					int corrected = m - start;
+					long corrected = m - start;
 					while (corrected < 0) {
 						corrected = corrected + pr[j];
 					}
@@ -92,8 +100,8 @@ public class PrimeGeneratorIntBased implements Runnable {
 
 					// Число присутствует с шагом ранее найденного простого числа - значит оно
 					// составное
-					if (buff[corrected] == true) {
-						buff[corrected] = false;
+					if (buff[(int) corrected] == true) {
+						buff[(int) corrected] = false;
 
 						// Последнее использовавшееся составное число на базе данного простого числа
 						// обновим в lpr[], только если оно больше старого
@@ -107,17 +115,17 @@ public class PrimeGeneratorIntBased implements Runnable {
 			// Извлечение простых чисел из данного boolean[]
 			for (int j = 0; j < buff_len; j++) {
 				// Выход за границу generatorCapacity равнозначно прекращению работы треда
-				if (pr_counter == generatorCapacity) {
+				if (pr_current == generatorCapacity) {
 					return;
 				}
 
 				if (buff[j] == true) {
-					int temp = j + start; // Найденное простое число
+					int temp = j + (int) start; // Найденное простое число. Риск переполнения int
 					pr[pr_counter] = temp;
 					lpr[pr_counter] = temp;
 					pr_counter++; // Общее число найденных простых чисел увеличивается
 
-					Starter.logger.info("i={} prime={} [{}, {})", pr_current, temp, start, end + 1);
+					Starter.logger.info("i={}, pr_counter={}, prime_found={}, prime_base={} [{}, {})", pr_current, pr_counter, temp, pr[pr_current], start, end + 1);
 				}
 			}
 			pr_current++; // Переход к разбору следующего необработанного простого числа
