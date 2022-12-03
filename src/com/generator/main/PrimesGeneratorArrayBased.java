@@ -23,7 +23,7 @@ import java.math.BigInteger;
  * @author bratishka
  * @version 1.0
  */
-public class PrimeGeneratorArrayBased implements Runnable {
+public class PrimesGeneratorArrayBased implements Runnable {
 	// Максимальное количество чисел для проверки (квази-бесконечный массив)
 	// Integer.MAX_VALUE = 2_147_483_647, при -1 происходит ошибка "Requested
 	//  array size exceeds VM limit"

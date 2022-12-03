@@ -22,7 +22,7 @@ package com.generator.main;
  * @author bratishka
  * @version 1.0
  */
-public class PrimeGeneratorArrayBasedOptimized implements Runnable {
+public class PrimesGeneratorArrayBasedOptimized implements Runnable {
 	// Максимальное количество чисел для проверки (квази-бесконечный массив)
 	// Integer.MAX_VALUE = 2_147_483_647, при -1 происходит ошибка "Requested
 	// array size exceeds VM limit"
