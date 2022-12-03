@@ -23,12 +23,13 @@ import java.util.function.IntPredicate;
  * 
  * На числе 31399 возникает StackOverflowError.
  * 
- * @author Alec
- *         https://stackoverflow.com/questions/43760641/java-8-streams-and-the-sieve-of-eratosthenes
+ * @author Alec (<a href=
+ *         "https://stackoverflow.com/questions/43760641/java-8-streams-and-the-sieve-of-eratosthenes">StackOverflow</a
+ *         href>)
  * @author bratishka
  * @version 1.0
  */
-public class PrimeGeneratorStreamBased1 implements Runnable {
+public class PrimesGeneratorStreamBased1 implements Runnable {
 	/* Счётчик количества проверенных предикатов в данном царь-предикате. */
 	static int currentCheck = 1;
 	/* Счётчик простых чисел */
