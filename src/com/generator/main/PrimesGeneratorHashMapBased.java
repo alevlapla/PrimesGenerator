@@ -40,7 +40,7 @@ import java.lang.reflect.Field;
  * @version 1.0
  **/
 
-public class PrimeGeneratorHashMapBased implements Runnable {
+public class PrimesGeneratorHashMapBased implements Runnable {
 	/*
 	 * Список обрабатываемых чисел. Key - число, value - список найденных простый
 	 * делителей данного числа

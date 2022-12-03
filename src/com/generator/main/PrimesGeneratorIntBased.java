@@ -10,7 +10,7 @@ import java.util.Arrays;
  * @version 1.0
  */
 
-public class PrimeGeneratorIntBased implements Runnable {
+public class PrimesGeneratorIntBased implements Runnable {
 	// Бесконечный генератор не реализовать - в любом случае будет ограничение
 	// памяти компьютера. При объёме массива в Integer.MAX_VALUE будет
 	// OutOfMemoryError (requested array size exceeds VM limit)
