@@ -7,17 +7,7 @@ public class Starter {
 	final static Logger logger = LoggerFactory.getLogger(Starter.class);
 
 	public static void main(String[] args) throws InterruptedException {
-<<<<<<< HEAD
-//		Thread pg_int = new Thread(new PrimeGeneratorIntBased(), "generator");
-<<<<<<< HEAD
-		Thread pg_int = new Thread(new PrimesGeneratorBitSetBased(), "generator");
-
-=======
-		Thread pg_int = new Thread(new PrimesGeneratorHashMapBased(), "generator");
->>>>>>> refs/heads/Generator2
-=======
-		Thread pg_int = new Thread(new PrimesGeneratorArrayBased(), "generator");
->>>>>>> refs/heads/Generator1
+		Thread pg_int = new Thread(new PrimeGeneratorIntBased(), "generator");
 		pg_int.start();
 
 		try {
