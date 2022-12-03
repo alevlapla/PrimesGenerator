@@ -53,14 +53,11 @@ public class PrimesGeneratorHashMapBased implements Runnable {
 	public void run() {
 		Long curr = Long.valueOf(3); // Начало перебора от 3
 
-		// TODO Поставить бесконечный цикл
-		for (int j = 0; j < 5000001; j++) {
-//		for (;;) {
+		for (;;) {
 			// Если key в HashMap нет - данное число простое
 			if (!cand.containsKey(curr)) {
 				List<Long> temp = new ArrayList<>();
 				temp.add(curr);
-				cand.put(curr, temp);
 
 				// "Проброс" данного простого множителя на позицию i * i.
 				// Необходимо помнить о переполнении. В данном случае проверка на переполнение
@@ -82,20 +79,15 @@ public class PrimesGeneratorHashMapBased implements Runnable {
 					// Если целевого числа для "проброса" нет - создадим соответствующий key.
 					// Или добавим очередной проброшенный простой делитель
 					Long next_index = curr + temp.get(i) * 2;
-
 					Long curr_sub = temp.get(i);
-					if (cand.containsKey(next_index)) {
-						cand.get(next_index).add(curr_sub);
-					} else {
-						List<Long> temp_new = new ArrayList<>();
-						temp_new.add(curr_sub);
-						cand.put(next_index, temp_new);
-					}
+					List<Long> temp_next = cand.getOrDefault(next_index, new ArrayList<>());
+					temp_next.add(curr_sub);
+					cand.put(next_index, temp_next);
 				}
 			}
 			// Текущая пара больше не нужна - удалим её
 			cand.remove(curr);
-			curr = curr + 2;
+			curr += 2;
 		}
 	}
 
