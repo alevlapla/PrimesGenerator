@@ -21,7 +21,19 @@ public class Starter {
 
 		// PrimesGeneratorIteratorBased реализует интерфейс Iterable<E>, а значит может
 		// быть целью foreach
-		PrimesGeneratorIteratorBased primes = new PrimesGeneratorIteratorBased();
-		for (Long l : primes) {}
+		PrimesGeneratorHashMapBased2 primes = new PrimesGeneratorHashMapBased2();
+//		Test primes = new Test();
+//		for (Long l : primes) {}
+		int counter = 0;
+//		for (int i = 0; i < 10000; i++) {
+		for (;;) {
+			counter++;
+//			primes.next();
+			
+			
+			Starter.logger.info("prime={}, count={}", primes.next(), counter);
+		}
+		
+//		System.out.println("itrs.size()=" + PrimesGeneratorHashMapBased3.itrs.size());
 	}
 }
