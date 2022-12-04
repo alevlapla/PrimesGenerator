@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
+import java.math.BigInteger;
 
 public class Starter {
 	final static Logger logger = LoggerFactory.getLogger(Starter.class);
@@ -21,7 +22,13 @@ public class Starter {
 
 		// PrimesGeneratorIteratorBased реализует интерфейс Iterable<E>, а значит может
 		// быть целью foreach
-		PrimesGeneratorIteratorBased primes = new PrimesGeneratorIteratorBased();
-		for (Long l : primes) {}
+//		PrimesGeneratorIteratorBased primes = new PrimesGeneratorIteratorBased();
+//		for (Long l : primes) {}
+		
+		PrimesGeneratorPQOptimized pq = new PrimesGeneratorPQOptimized();
+//		for (BigInteger bd : new PrimesGeneratorPQNotOptimized()) {}
+		for (int i = 0; i < 100; i++) {
+			pq.next();
+		}
 	}
 }
