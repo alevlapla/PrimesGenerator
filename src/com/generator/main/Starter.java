@@ -6,8 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.generator.bithell.BitSievePageSegmented;
+
 public class Starter {
-	final static Logger logger = LoggerFactory.getLogger(Starter.class);
+	public final static Logger logger = LoggerFactory.getLogger(Starter.class);
 
 	public static void main(String[] args) throws InterruptedException {
 //		Thread pg_int = new Thread(new PrimesGeneratorHashMapBased(), "generator");
@@ -19,10 +21,9 @@ public class Starter {
 //			e.printStackTrace();
 //		}
 
-		PrimesGeneratorHashMapBased2 primes = new PrimesGeneratorHashMapBased2();
-		int counter = 0;
-		for (;;) {
-			Starter.logger.info("prime={}, count={}", primes.next(), ++counter);
+		BitSievePageSegmented primes = new BitSievePageSegmented();
+		for (int i = 0; i < 1_000_000; i++) {
+			Starter.logger.info("prime={}, count={}", primes.next());
 		}
 	}
 }
