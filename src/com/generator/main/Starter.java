@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.math.BigInteger;
 
+import com.generator.bithell.BitSievePageSegmented;
+
 public class Starter {
-	final static Logger logger = LoggerFactory.getLogger(Starter.class);
+	public final static Logger logger = LoggerFactory.getLogger(Starter.class);
 
 	public static void main(String[] args) throws InterruptedException {
 //		Thread pg_int = new Thread(new PrimesGeneratorHashMapBased(), "generator");
@@ -20,15 +22,9 @@ public class Starter {
 //			e.printStackTrace();
 //		}
 
-		// PrimesGeneratorIteratorBased реализует интерфейс Iterable<E>, а значит может
-		// быть целью foreach
-//		PrimesGeneratorIteratorBased primes = new PrimesGeneratorIteratorBased();
-//		for (Long l : primes) {}
-		
-		PrimesGeneratorPQOptimized pq = new PrimesGeneratorPQOptimized();
-//		for (BigInteger bd : new PrimesGeneratorPQNotOptimized()) {}
-		for (int i = 0; i < 100; i++) {
-			pq.next();
+		BitSievePageSegmented primes = new BitSievePageSegmented();
+		for (int i = 0; i < 1_000_000; i++) {
+			Starter.logger.info("prime={}, count={}", primes.next());
 		}
 	}
 }
