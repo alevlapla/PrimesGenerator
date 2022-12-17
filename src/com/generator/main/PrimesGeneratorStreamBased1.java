@@ -71,8 +71,6 @@ public class PrimesGeneratorStreamBased1 implements Runnable {
 
 //				System.out.println("filter() проверяет число \"" + i + "\" цепочкой предикатов... ");
 
-				// TODO попробуй - точно слева направо цепочка разматывается?
-
 				// Прежде чем вычислить .test(i), будет вычислена цепочка предикатов до:
 				// Predicate(true), затем .add(v % 2 != * 0), потом .add(v % 3 != 0)...
 				return isPrime.test(i);
