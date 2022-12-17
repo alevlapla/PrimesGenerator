@@ -2,10 +2,6 @@ package com.generator.main;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
-import java.math.BigInteger;
 
 import com.generator.bithell.BitSievePageSegmented;
 
@@ -22,7 +18,7 @@ public class Starter {
 //			e.printStackTrace();
 //		}
 
-		BitSievePageSegmented primes = new BitSievePageSegmented();
+		BitSievePageSegmented primes = new BitSievePageSegmented();	
 		for (int i = 0; i < 1_000_000; i++) {
 			Starter.logger.info("prime={}, count={}", primes.next());
 		}
